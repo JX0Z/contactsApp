@@ -1,6 +1,6 @@
 package application;
 
-public class contact {
+public class Contact {
 	private simpleStringProperty firstName;
 	private SimpleStringProperty middleName;
 	private SimpleStringProperty lastName;
@@ -16,6 +16,14 @@ public class contact {
 	public contact(String firstName, String lastName, String email) {
 		this.firstName = new SimpleStringProperty(firstName);
 		this.lastName = new SimpleStringProperty(lastName);
+		this.email = new SimpleStringProperty(email);
+	}
+	
+	public contact(String firstName, String lastName, String email) {
+		this.firstName = new SimpleStringProperty(firstName);
+		this.middleName = new SimpleStringProperty(middleName);
+		this.lastName = new SimpleStringProperty(lastName);
+		this.company = new SimpleStringProperty(company);
 		this.email = new SimpleStringProperty(email);
 	}
 	
