@@ -1,36 +1,36 @@
 package application;
 
 public class contact {
-	private String firstName;
-	private String lastName;
+	private simpleStringProperty firstName;
+	private SimpleStringProperty lastName;
 	
-	private String email;
-	public contact(String firstName, String lastName) {
+	private SimpleStringProperty email;
+	public contact(SimpleStringProperty firstName, SimpleStringProperty lastName) {
 		this.firstName=firstName;
 		this.lastName=lastName;
 	}
-	public contact(String firstName, String lastName, String email) {
+	public contact(SimpleStringProperty firstName, SimpleStringProperty lastName, SimpleStringProperty email) {
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.email=email;
 	}
 	
-	public String getFirstName() {
+	public SimpleStringProperty getFirstName() {
 		return(this.firstName);
 	}
-    public void setFirstName(String firstName) {
+    public void setFirstName(SimpleStringProperty firstName) {
         this.firstName = firstName;
     }
-	public String getlastName() {
+	public SimpleStringProperty getlastName() {
 		return(this.lastName);
 	}
-    public void setLastName(String lastName) {
+    public void setLastName(SimpleStringProperty lastName) {
         this.lastName = lastName;
     }
-	public String getEmail() {
+	public SimpleStringProperty getEmail() {
 		return(this.email);
 	}
-	public void setEmail(String email) {
+	public void setEmail(SimpleStringProperty email) {
 		this.email = email;
 	}
 }
