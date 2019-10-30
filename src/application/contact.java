@@ -9,44 +9,44 @@ public class contact {
 	
 	private SimpleStringProperty email;
 	
-	public contact(SimpleStringProperty firstName, SimpleStringProperty lastName) {
-		this.firstName=firstName;
-		this.lastName=lastName;
+	public contact(String firstName, String lastName) {
+		this.firstName = new SimpleStringProperty(firstName);
+		this.lastName = new SimpleStringProperty(lastName);
 	}
-	public contact(SimpleStringProperty firstName, SimpleStringProperty lastName, SimpleStringProperty email) {
-		this.firstName=firstName;
-		this.lastName=lastName;
-		this.email=email;
+	public contact(String firstName, String lastName, String email) {
+		this.firstName = new SimpleStringProperty(firstName);
+		this.lastName = new SimpleStringProperty(lastName);
+		this.email = new SimpleStringProperty(email);
 	}
 	
 	public SimpleStringProperty getFirstName() {
 		return(this.firstName);
 	}
-    	public void setFirstName(SimpleStringProperty firstName) {
-        	this.firstName = firstName;
+    	public void setFirstName(String firstName) {
+        	this.firstName =  new SimpleStringProperty(firstName);
    	}
 	public SimpleStringProperty getlastName() {
 		return(this.lastName);
 	}
- 	public void setLastName(SimpleStringProperty lastName) {
-        	this.lastName = lastName;
+ 	public void setLastName(String lastName) {
+        	this.lastName = new SimpleStringProperty(lastName);
 	}
 	public SimpleStringProperty getMiddleName() {
 		return(this.middleName);
 	}
- 	public void setMiddleName(SimpleStringProperty middleName) {
-        	this.middleName = middleName;
+ 	public void setMiddleName(String middleName) {
+        	this.middleName = new SimpleStringProperty(middleName);
 	}
 	public SimpleStringProperty getEmail() {
 		return(this.email);
 	}
-	public void setEmail(SimpleStringProperty email) {
-		this.email = email;
+	public void setEmail(String email) {
+		this.email = new SimpleStringProperty(email);
 	}
 	public SimpleStringProperty getCompany() {
 		return(this.company);
 	}
-	public void setCompany(SimpleStringProperty company) {
-		this.company = company;
+	public void setCompany(String company) {
+		this.company = new SimpleStringProperty(company);
 	}
 }
