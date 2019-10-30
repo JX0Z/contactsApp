@@ -31,30 +31,30 @@ public class Contact {
 		return(this.firstName);
 	}
     	public void setFirstName(String firstName) {
-        	this.firstName =  new SimpleStringProperty(firstName);
+        	this.firstName.set(firstName);
    	}
 	public SimpleStringProperty getlastName() {
 		return(this.lastName);
 	}
  	public void setLastName(String lastName) {
-        	this.lastName = new SimpleStringProperty(lastName);
+        	this.lastName.set(lastName);
 	}
 	public SimpleStringProperty getMiddleName() {
 		return(this.middleName);
 	}
  	public void setMiddleName(String middleName) {
-        	this.middleName = new SimpleStringProperty(middleName);
+        	this.middleName.set(middleName);
 	}
 	public SimpleStringProperty getEmail() {
 		return(this.email);
 	}
 	public void setEmail(String email) {
-		this.email = new SimpleStringProperty(email);
+		this.email.set(email);
 	}
 	public SimpleStringProperty getCompany() {
 		return(this.company);
 	}
 	public void setCompany(String company) {
-		this.company = new SimpleStringProperty(company);
+		this.company.set(company);
 	}
 }
