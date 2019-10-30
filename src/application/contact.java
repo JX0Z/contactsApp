@@ -14,6 +14,7 @@ public class contact {
 		this.lastName=n2;
 		this.email=e;
 	}
+	
 	public String getFirstName() {
 		return(this.firstName);
 	}
@@ -30,6 +31,6 @@ public class contact {
 		return(this.email);
 	}
 	public void setEmail(String e) {
-		this.lastName = e;
+		this.email = e;
 	}
 }
