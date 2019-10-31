@@ -1,9 +1,12 @@
 package application;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -52,8 +55,21 @@ public class Contact {
 		return list;
 	}
 
-	public static void saveCSV(ObservableList<Contact> list) {
-		// To Do: Complete this method to write list to Contact.file
+	public static void saveCSV(ObservableList<Contact> list) throws Exception {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(Contact.file));
+		for (int i = 0; i<list.size(); i++) {
+			bw.write(list.get(i).getFirstName().get());
+			bw.write(",");
+			bw.write(list.get(i).getMiddleName().get());
+			bw.write(",");
+			bw.write(list.get(i).getLastName().get());
+			bw.write(",");
+			bw.write(list.get(i).getCompany().get());
+			bw.write(",");
+			bw.write(list.get(i).getEmail().get());
+			bw.write("\n");
+		}
+		bw.flush();
 	}
 
 	public SimpleStringProperty getFirstName() {
@@ -64,7 +80,7 @@ public class Contact {
 		this.firstName.set(firstName);
 	}
 
-	public SimpleStringProperty getlastName() {
+	public SimpleStringProperty getLastName() {
 		return (this.lastName);
 	}
 
