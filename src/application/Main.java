@@ -20,6 +20,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 public class Main extends Application {
@@ -264,6 +266,22 @@ public class Main extends Application {
         tv.setLayoutX(10);
         tv.setLayoutY(80);
         tv.setPrefWidth(590);
+        tv.setOnKeyPressed(
+        	new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					// TODO Auto-generated method stub
+					if(event.getCode() == KeyCode.DELETE) {
+						
+						contactsList.remove(tv.getSelectionModel().getSelectedItems().get(0));
+						
+						try { saveContactsFile(); } 
+        				catch (IOException e) { e.printStackTrace(); }
+						
+					}
+				}
+        	}
+        );
         root.getChildren().add(tv);
 		
 	}
