@@ -1,5 +1,12 @@
 package application;
 	
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,11 +31,42 @@ public class Main extends Application {
 	Button addContact;
 	
 	TableColumn<Contact, String> firstNameCol, middleNameCol, lastNameCol, companyCol, emailCol;
-	
 	TableView<Contact> tv = new TableView<Contact>();
-	final ObservableList<Contact> contactsList = FXCollections.observableArrayList(
-		    new Contact("Jax", "Hodgkinson", "jxhub@hotmail.com")
-		);
+	final ObservableList<Contact> contactsList = FXCollections.observableArrayList();
+	
+	File contactsFile = new File("src/application/contacts.csv");
+
+	public void loadContactsFile() throws IOException {
+		
+		BufferedReader br = new BufferedReader(new FileReader(contactsFile));
+		
+		String st = br.readLine();
+		while((st = br.readLine()) != null) {
+			String[] split = st.split(",");
+			contactsList.add(new Contact(split[2], split[3], split[4], split[0], split[1]));
+		}
+		
+		br.close();
+		
+	}
+	
+	public void saveContactsFile() throws IOException {
+		
+		BufferedWriter bw = new BufferedWriter(new FileWriter(contactsFile));
+		
+		bw.write("Email,Company,First Name,Middle Name,Last Name\n");
+		for(int i = 0; i < contactsList.size(); i++) {
+			bw.write(contactsList.get(i).getEmail() + "," + 
+					contactsList.get(i).getCompany() + "," + 
+					contactsList.get(i).getFirstName() + "," + 
+					contactsList.get(i).getMiddleName() + "," +
+					contactsList.get(i).getLastName() + "\n");
+		}
+		
+		bw.flush();
+		bw.close();
+		
+	}
 	
 	@SuppressWarnings("unchecked")
 	public void loadFxObjects() {
@@ -80,6 +118,7 @@ public class Main extends Application {
 		addContact.setLayoutX(tfEmail.getLayoutX() + tfEmail.getPrefWidth() + 5);
 		addContact.setLayoutY(tfEmail.getLayoutY());
 		addContact.setOnAction(event -> { 
+			
 			if(!(tfFirstName.getText().equals("") || tfLastName.getText().equals("") || !(!tfEmail.getText().equals("") || !tfCompany.getText().equals("") || !tfMiddleName.getText().equals("")))) {
 			
 				contactsList.add(new Contact(
@@ -96,6 +135,9 @@ public class Main extends Application {
 				tfCompany.setText("");
 				tfEmail.setText("");
 				
+				try { saveContactsFile(); } 
+				catch (IOException e) { e.printStackTrace(); }
+				
 			} else if(!(tfFirstName.getText().equals("") || tfLastName.getText().equals(""))) {
 			
 				contactsList.add(new Contact(
@@ -109,9 +151,12 @@ public class Main extends Application {
 				tfCompany.setText("");
 				tfEmail.setText("");
 				
+				try { saveContactsFile(); } 
+				catch (IOException e) { e.printStackTrace(); }
+				
 			}
-		});
-		root.getChildren().add(addContact);
+			
+		}); root.getChildren().add(addContact);
 		
 		firstNameCol = new TableColumn<Contact, String>("First Name");
         firstNameCol.setMinWidth(90);
@@ -121,10 +166,14 @@ public class Main extends Application {
         	    new EventHandler<CellEditEvent<Contact, String>>() {
         	        @Override
         	        public void handle(CellEditEvent<Contact, String> t) {
+        	        	
         	        	int row = t.getTablePosition().getRow();
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setFirstName(newVal);
-        	            System.out.println(contactsList.get(t.getTablePosition().getRow()).getFirstName());
+        	            
+        	            try { saveContactsFile(); } 
+        				catch (IOException e) { e.printStackTrace(); }
+        	            
         	        }
         	    }
         	);
@@ -137,9 +186,14 @@ public class Main extends Application {
         	    new EventHandler<CellEditEvent<Contact, String>>() {
         	        @Override
         	        public void handle(CellEditEvent<Contact, String> t) {
+        	        	
         	        	int row = t.getTablePosition().getRow();
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setMiddleName(newVal);
+        	            
+        	            try { saveContactsFile(); } 
+        				catch (IOException e) { e.printStackTrace(); }
+        	            
         	        }
         	    }
         	);
@@ -152,9 +206,14 @@ public class Main extends Application {
         	    new EventHandler<CellEditEvent<Contact, String>>() {
         	        @Override
         	        public void handle(CellEditEvent<Contact, String> t) {
+        	        	
         	        	int row = t.getTablePosition().getRow();
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setLastName(newVal);
+        	            
+        	            try { saveContactsFile(); } 
+        				catch (IOException e) { e.printStackTrace(); }
+        	            
         	        }
         	    }
         	);
@@ -167,9 +226,14 @@ public class Main extends Application {
         	    new EventHandler<CellEditEvent<Contact, String>>() {
         	        @Override
         	        public void handle(CellEditEvent<Contact, String> t) {
+        	        	
         	        	int row = t.getTablePosition().getRow();
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setCompany(newVal);
+        	            
+        	            try { saveContactsFile(); } 
+        				catch (IOException e) { e.printStackTrace(); }
+        	            
         	        }
         	    }
         	);
@@ -182,13 +246,19 @@ public class Main extends Application {
         	    new EventHandler<CellEditEvent<Contact, String>>() {
         	        @Override
         	        public void handle(CellEditEvent<Contact, String> t) {
+        	        	
         	        	int row = t.getTablePosition().getRow();
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setEmail(newVal);
+        	            
+        	            try { saveContactsFile(); } 
+        				catch (IOException e) { e.printStackTrace(); }
+        	            
         	        }
         	    }
         	);
-        
+
+		tv.setEditable(true);
         tv.setItems(contactsList);
         tv.getColumns().addAll(firstNameCol, middleNameCol, lastNameCol, companyCol, emailCol);
         tv.setLayoutX(10);
@@ -199,7 +269,7 @@ public class Main extends Application {
 	}
 	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws IOException {
 		
 		root = new Pane();
 		scene = new Scene(root,610,490);
@@ -208,8 +278,7 @@ public class Main extends Application {
 		primaryStage.show();
 		
 		//Load .csv into the contactsList
-		
-			//Loading Code
+		loadContactsFile();
 
 		loadFxObjects();
 		
