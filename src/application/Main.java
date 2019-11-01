@@ -116,6 +116,13 @@ public class Main extends Application {
 				try { Contact.saveCSV(contactsList); } 
 				catch (IOException e) { e.printStackTrace(); }
 				
+			}  else {
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+        		alert.setTitle("Field Input Error");
+        		alert.setHeaderText("Both the fields \"First Name\" & \"Last Name\" must be filled.");
+        		alert.show();
+				
 			}
 			
 		}); root.getChildren().add(addContact);
@@ -130,11 +137,24 @@ public class Main extends Application {
         	        public void handle(CellEditEvent<Contact, String> t) {
         	        	
         	        	int row = t.getTablePosition().getRow();
-        	        	String newVal = t.getNewValue();
-        	            ((Contact) t.getTableView().getItems().get(row)).setFirstName(newVal);
+    	        		String newVal = t.getNewValue();
+        	        	
+        	        	if(!t.getNewValue().equals("")) {
+        	        		
+        	        		((Contact) t.getTableView().getItems().get(row)).setLastName(newVal);
         	            
-        	            try { Contact.saveCSV(contactsList); } 
-        				catch (IOException e) { e.printStackTrace(); }
+        	        		try { Contact.saveCSV(contactsList); } 
+        	        		catch (IOException e) { e.printStackTrace(); }
+        	        		
+        	        	} else {
+        	        		
+        	        		Alert alert = new Alert(AlertType.INFORMATION);
+        	        		alert.setTitle("Field Input Error");
+        	        		alert.setHeaderText("Field \"First Name\" cannot be empty.");
+        	        		alert.show();
+        	        		t.getTableView().refresh();
+        	        		
+        	        	}
         	            
         	        }
         	    }
@@ -170,11 +190,24 @@ public class Main extends Application {
         	        public void handle(CellEditEvent<Contact, String> t) {
         	        	
         	        	int row = t.getTablePosition().getRow();
-        	        	String newVal = t.getNewValue();
-        	            ((Contact) t.getTableView().getItems().get(row)).setLastName(newVal);
+    	        		String newVal = t.getNewValue();
+        	        	
+        	        	if(!t.getNewValue().equals("")) {
+        	        		
+        	        		((Contact) t.getTableView().getItems().get(row)).setLastName(newVal);
         	            
-        	            try { Contact.saveCSV(contactsList); } 
-        				catch (IOException e) { e.printStackTrace(); }
+        	        		try { Contact.saveCSV(contactsList); } 
+        	        		catch (IOException e) { e.printStackTrace(); }
+        	        		
+        	        	} else {
+        	        		
+        	        		Alert alert = new Alert(AlertType.INFORMATION);
+        	        		alert.setTitle("Field Input Error");
+        	        		alert.setHeaderText("Field \"Last Name\" cannot be empty.");
+        	        		alert.show();
+        	        		t.getTableView().refresh();
+        	        		
+        	        	}
         	            
         	        }
         	    }
