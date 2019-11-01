@@ -3,7 +3,6 @@ package application;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,72 +39,72 @@ public class Contact {
 		this.email = new SimpleStringProperty(email);
 	}
 
-	private static File file = new File("src/application/data.txt");
+	private static File file = new File("src/application/contacts.csv");
 
-	public static ObservableList<Contact> loadCSV() throws Exception {
+	public static ObservableList<Contact> loadCSV() throws IOException {
 		ObservableList<Contact> list = FXCollections.observableArrayList();
 		BufferedReader br = new BufferedReader(new FileReader(Contact.file));
 		String line = br.readLine();
 		while (line != null) {
 			String[] fields = line.split(",");
-			Contact contact = new Contact(fields[0], fields[1], fields[2], fields[3], fields[4]);
+			Contact contact = new Contact(fields[2], fields[3], fields[4], fields[1], fields[0]);
 			list.add(contact);
 			line = br.readLine();
 		}
+		br.close();
 		return list;
 	}
 
-	public static void saveCSV(ObservableList<Contact> list) throws Exception {
+	public static void saveCSV(ObservableList<Contact> list) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(Contact.file));
+		
 		for (int i = 0; i<list.size(); i++) {
-			bw.write(list.get(i).getFirstName().get());
-			bw.write(",");
-			bw.write(list.get(i).getMiddleName().get());
-			bw.write(",");
-			bw.write(list.get(i).getLastName().get());
-			bw.write(",");
-			bw.write(list.get(i).getCompany().get());
-			bw.write(",");
-			bw.write(list.get(i).getEmail().get());
-			bw.write("\n");
+			bw.write(
+				list.get(i).getEmail()+","+
+				list.get(i).getCompany()+","+
+				list.get(i).getFirstName()+","+
+				list.get(i).getMiddleName()+","+
+				list.get(i).getLastName()+",\n"
+			);
 		}
 		bw.flush();
+		bw.close();
 	}
 
-	public SimpleStringProperty getFirstName() {
-		return (this.firstName);
+	public String getFirstName() {
+		return (this.firstName.get());
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName.set(firstName);
 	}
 
-	public SimpleStringProperty getLastName() {
-		return (this.lastName);
+	public String getLastName() {
+		return (this.lastName.get());
 	}
 
 	public void setLastName(String lastName) {
 		this.lastName.set(lastName);
 	}
 
-	public SimpleStringProperty getMiddleName() {
-		return (this.middleName);
+	public String getMiddleName() {
+		return (this.middleName.get());
 	}
 
 	public void setMiddleName(String middleName) {
 		this.middleName.set(middleName);
 	}
 
-	public SimpleStringProperty getEmail() {
-		return (this.email);
+	public String getEmail() {
+		return (this.email.get());
 	}
 
 	public void setEmail(String email) {
 		this.email.set(email);
 	}
 
-	public SimpleStringProperty getCompany() {
-		return (this.company);
+	public String getCompany() {
+		return (this.company.get());
 	}
 
 	public void setCompany(String company) {

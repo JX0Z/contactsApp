@@ -1,10 +1,5 @@
 package application;
 	
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -34,41 +29,7 @@ public class Main extends Application {
 	
 	TableColumn<Contact, String> firstNameCol, middleNameCol, lastNameCol, companyCol, emailCol;
 	TableView<Contact> tv = new TableView<Contact>();
-	final ObservableList<Contact> contactsList = FXCollections.observableArrayList();
-	
-	File contactsFile = new File("src/application/contacts.csv");
-
-	public void loadContactsFile() throws IOException {
-		
-		BufferedReader br = new BufferedReader(new FileReader(contactsFile));
-		
-		String st = br.readLine();
-		while((st = br.readLine()) != null) {
-			String[] split = st.split(",");
-			contactsList.add(new Contact(split[2], split[3], split[4], split[0], split[1]));
-		}
-		
-		br.close();
-		
-	}
-	
-	public void saveContactsFile() throws IOException {
-		
-		BufferedWriter bw = new BufferedWriter(new FileWriter(contactsFile));
-		
-		bw.write("Email,Company,First Name,Middle Name,Last Name\n");
-		for(int i = 0; i < contactsList.size(); i++) {
-			bw.write(contactsList.get(i).getEmail() + "," + 
-					contactsList.get(i).getCompany() + "," + 
-					contactsList.get(i).getFirstName() + "," + 
-					contactsList.get(i).getMiddleName() + "," +
-					contactsList.get(i).getLastName() + "\n");
-		}
-		
-		bw.flush();
-		bw.close();
-		
-	}
+	ObservableList<Contact> contactsList = FXCollections.observableArrayList();
 	
 	@SuppressWarnings("unchecked")
 	public void loadFxObjects() {
@@ -127,17 +88,16 @@ public class Main extends Application {
 					tfFirstName.getText(),
 					tfMiddleName.getText(),
 					tfLastName.getText(),
-					tfEmail.getText(),
-					tfCompany.getText()
+					tfCompany.getText(),
+					tfEmail.getText()
 				));
-				//Add save code to the csv
 				tfFirstName.setText("");
 				tfMiddleName.setText("");
 				tfLastName.setText("");
 				tfCompany.setText("");
 				tfEmail.setText("");
 				
-				try { saveContactsFile(); } 
+				try { Contact.saveCSV(contactsList); } 
 				catch (IOException e) { e.printStackTrace(); }
 				
 			} else if(!(tfFirstName.getText().equals("") || tfLastName.getText().equals(""))) {
@@ -153,7 +113,7 @@ public class Main extends Application {
 				tfCompany.setText("");
 				tfEmail.setText("");
 				
-				try { saveContactsFile(); } 
+				try { Contact.saveCSV(contactsList); } 
 				catch (IOException e) { e.printStackTrace(); }
 				
 			}
@@ -173,7 +133,7 @@ public class Main extends Application {
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setFirstName(newVal);
         	            
-        	            try { saveContactsFile(); } 
+        	            try { Contact.saveCSV(contactsList); } 
         				catch (IOException e) { e.printStackTrace(); }
         	            
         	        }
@@ -193,7 +153,7 @@ public class Main extends Application {
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setMiddleName(newVal);
         	            
-        	            try { saveContactsFile(); } 
+        	            try { Contact.saveCSV(contactsList); } 
         				catch (IOException e) { e.printStackTrace(); }
         	            
         	        }
@@ -213,7 +173,7 @@ public class Main extends Application {
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setLastName(newVal);
         	            
-        	            try { saveContactsFile(); } 
+        	            try { Contact.saveCSV(contactsList); } 
         				catch (IOException e) { e.printStackTrace(); }
         	            
         	        }
@@ -233,7 +193,7 @@ public class Main extends Application {
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setCompany(newVal);
         	            
-        	            try { saveContactsFile(); } 
+        	            try { Contact.saveCSV(contactsList); } 
         				catch (IOException e) { e.printStackTrace(); }
         	            
         	        }
@@ -253,7 +213,7 @@ public class Main extends Application {
         	        	String newVal = t.getNewValue();
         	            ((Contact) t.getTableView().getItems().get(row)).setEmail(newVal);
         	            
-        	            try { saveContactsFile(); } 
+        	            try { Contact.saveCSV(contactsList); } 
         				catch (IOException e) { e.printStackTrace(); }
         	            
         	        }
@@ -275,7 +235,7 @@ public class Main extends Application {
 						
 						contactsList.remove(tv.getSelectionModel().getSelectedItems().get(0));
 						
-						try { saveContactsFile(); } 
+						try { Contact.saveCSV(contactsList); } 
         				catch (IOException e) { e.printStackTrace(); }
 						
 					}
@@ -296,7 +256,7 @@ public class Main extends Application {
 		primaryStage.show();
 		
 		//Load .csv into the contactsList
-		loadContactsFile();
+		contactsList = Contact.loadCSV();
 
 		loadFxObjects();
 		
